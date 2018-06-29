@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="music.orm.Membregroupe" table="membregroupe" schema="music_orm">
+        <id name="id">
+            <column name="ID" sql-type="int(11)"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="groupeByIdgroupe" class="music.orm.Groupe" cascade="all">
+            <column name="IDGROUPE"/>
+        </many-to-one>
+        <many-to-one name="artisteByIdartiste" class="music.orm.Artiste" cascade="all">
+            <column name="IDARTISTE"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

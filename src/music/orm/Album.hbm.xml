@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="music.orm.Album" table="album" schema="music_orm">
+        <id name="id">
+            <column name="ID" sql-type="int(11)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="titre">
+            <column name="TITRE" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="genre">
+            <column name="GENRE" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="datesortie">
+            <column name="DATESORTIE" sql-type="date"/>
+        </property>
+        <property name="prix">
+            <column name="PRIX" sql-type="decimal(10,2)" precision="10" scale="2"/>
+        </property>
+        <many-to-one name="groupeByIdgroupe" class="music.orm.Groupe" cascade="all">
+            <column name="IDGROUPE" not-null="true"/>
+        </many-to-one>
+        <many-to-one name="artisteByIdartiste" class="music.orm.Artiste" cascade="all">
+            <column name="IDARTISTE" not-null="true"/>
+        </many-to-one>
+        <set name="contenusById" inverse="true" cascade="save-update">
+            <key>
+                <column name="IDALBUM"/>
+            </key>
+            <one-to-many not-found="ignore" class="music.orm.Contenu"/>
+        </set>
+        <set name="ventesById" inverse="true" cascade="save-update">
+            <key>
+                <column name="IDALBUM"/>
+            </key>
+            <one-to-many not-found="ignore" class="music.orm.Vente"/>
+        </set>
+        <component name="AlbumInfos" class="music.orm.AlbumInfos" unique="true">
+            <parent name="music.orm.Album"/>
+            <property name="titre"/>
+            <property name="dateSortie"/>
+            <property name="prix"/>
+        </component>
+    </class>
+</hibernate-mapping>

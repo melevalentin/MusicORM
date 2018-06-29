@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="music.orm.Artiste" table="artiste" schema="music_orm">
+        <id name="id">
+            <column name="ID" sql-type="int(11)"/>
+            <generator class="identity"/>
+        </id>
+        <property name="nom">
+            <column name="NOM" sql-type="varchar(100)" length="100"/>
+        </property>
+        <property name="estchanteur">
+            <column name="ESTCHANTEUR" sql-type="tinyint(1)"/>
+        </property>
+        <set name="albumsById" inverse="true" cascade="save-update">
+            <key>
+                <column name="IDARTISTE" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="music.orm.Album"/>
+        </set>
+        <set name="membregroupesById" inverse="true" cascade="save-update">
+            <key>
+                <column name="IDARTISTE"/>
+            </key>
+            <one-to-many not-found="ignore" class="music.orm.Membregroupe"/>
+        </set>
+    </class>
+</hibernate-mapping>
